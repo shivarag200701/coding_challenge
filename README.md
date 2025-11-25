@@ -1,11 +1,11 @@
 # Windborne Balloon & Hazard Tracker
 
-A real-time interactive map visualization that combines Windborne Systems' global balloon constellation positions with active weather hazards from the OpenWeatherMap API.
+A real-time interactive map visualization that combines Windborne Systems' global balloon constellation positions with active weather hazards from the National Weather Service (NWS) API.
 
 ## Features
 
 - 🎈 **Live Balloon Tracking**: Displays current positions of Windborne's global sounding balloons from the live API
-- ⚠️ **Weather Hazard Mapping**: Overlays active weather alerts and hazards from the OpenWeatherMap API (global coverage)
+- ⚠️ **Weather Hazard Mapping**: Overlays active weather alerts and hazards from the National Weather Service (NWS) API
 - 🗺️ **Interactive Leaflet Map**: 2D map visualization with zoom, pan, and popup details
 - 🔄 **Dynamic Updates**: Automatically refreshes balloon data (hourly) and hazard data (every 30 minutes)
 - 🛡️ **Robust Data Handling**: Handles potentially corrupted or undocumented API responses gracefully
@@ -16,7 +16,7 @@ A real-time interactive map visualization that combines Windborne Systems' globa
 - **Vite** for build tooling
 - **Leaflet** & **react-leaflet** for map visualization
 - **Tailwind CSS** for styling
-- **OpenWeatherMap One Call API 3.0** for global weather hazard data
+- **National Weather Service (NWS) API** for weather hazard data
 
 ## Project Structure
 
@@ -24,7 +24,7 @@ A real-time interactive map visualization that combines Windborne Systems' globa
 src/
 ├── api/
 │   ├── balloon.ts          # Balloon API client
-│   └── alert.ts            # OpenWeatherMap alerts API client
+│   └── alert.ts            # NWS alerts API client
 ├── components/
 │   └── BalloonMap.tsx      # Main map component
 ├── hooks/
@@ -34,9 +34,9 @@ src/
     └── balloonData.ts      # Utilities for processing balloon data
 ```
 
-## Why OpenWeatherMap API?
+## Why NWS Alerts API?
 
-I chose the OpenWeatherMap One Call API 3.0 because it provides real-time, comprehensive weather hazard data with global coverage. Unlike the NWS API which only covers the United States, OpenWeatherMap aggregates alerts from various national weather agencies worldwide, making it perfect for tracking global balloon constellations. By combining live balloon positions with active weather alerts, we can identify potential risks to the constellation in real-time, regardless of where the balloons are located. This integration demonstrates practical value for operational decision-making while showcasing robust data handling of both structured and potentially corrupted datasets.
+I chose the National Weather Service (NWS) alerts API because it provides real-time, comprehensive weather hazard data that directly relates to balloon flight safety. By combining live balloon positions with active weather alerts, we can identify potential risks to the constellation in real-time. This integration demonstrates practical value for operational decision-making while showcasing robust data handling of both structured and potentially corrupted datasets.
 
 ## Development
 
@@ -46,17 +46,9 @@ I chose the OpenWeatherMap One Call API 3.0 because it provides real-time, compr
 
 ### Setup
 
-1. Install dependencies:
 ```bash
 npm install
 ```
-
-2. Create a `.env` file in the root directory and add your OpenWeatherMap API key:
-```bash
-VITE_OPENWEATHER_API_KEY=your_api_key_here
-```
-
-You can get a free API key by signing up at [OpenWeatherMap](https://openweathermap.org/api). The free tier includes access to the One Call API 3.0.
 
 ### Development Server
 
@@ -118,14 +110,12 @@ Make sure you get a 200 status code! Any other status means the application wasn
 - **Endpoints**: `00.json` (current), `01.json` (1 hour ago), up to `23.json` (23 hours ago)
 - **Note**: The API is undocumented and may sometimes return corrupted data. The application handles this robustly.
 
-### OpenWeatherMap Alerts API
+### NWS Alerts API
 
-- **Base URL**: `https://api.openweathermap.org/data/3.0/onecall`
-- **API**: One Call API 3.0
-- Returns weather alerts for specified coordinates (fetched for balloon locations)
-- Includes event type, description, severity, urgency, and geographic boundaries
-- **Note**: Requires an API key (set via `VITE_OPENWEATHER_API_KEY` environment variable)
-- Provides global coverage by aggregating alerts from various national weather agencies
+- **Base URL**: `https://api.weather.gov/alerts/active`
+- Returns GeoJSON features with active weather alerts
+- Includes severity, urgency, event type, description, and geographic boundaries
+- Provides comprehensive weather alert data for the United States
 
 ## License
 
