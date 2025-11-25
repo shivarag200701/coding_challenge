@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/treasure/:path*",
+      "destination": "https://a.windbornesystems.com/treasure/:path*"
+    }
+  ]
+}
+

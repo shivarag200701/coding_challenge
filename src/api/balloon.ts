@@ -1,7 +1,5 @@
-// Use proxy in development, full URL in production
-const BASE = import.meta.env.DEV 
-  ? "/treasure"  // Use Vite proxy in development
-  : "https://a.windbornesystems.com/treasure";  // Full URL in production
+// Always use relative path - works in both dev (Vite proxy) and production (Vercel rewrite)
+const BASE = "/treasure";
 
 export async function fetchBalloonHour(hourIndex: number) {
   const idx = hourIndex.toString().padStart(2, "0");
